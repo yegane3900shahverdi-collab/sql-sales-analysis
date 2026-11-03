@@ -1,0 +1,28 @@
+queries/01_data_exploration.sql
+-- 01_data_exploration :
+SELECT COUNT(*)
+FROM Sales.Orders ;            
+
+SELECT 
+MIN(orderdate) as firstorderdate ,
+MAX(orderdate) as secondordderdate
+FROM Sales.Orders ;            
+
+
+SELECT COUNT(DISTINCT custid) as uniquecustomer 
+FROM Sales.Orders ;    
+
+SELECT Top(5) *
+FROM Sales.Orders ;              
+
+SELECT  YEAR(orderdate) as orderyear ,
+COUNT(*) as Totalorders
+FROM Sales.Orders 
+Group By YEAR(orderdate)
+ORDER BY OrderYear ;	       
+
+SELECT orderid ,
+      COUNT(*) as duplicate
+FROM Sales.Orders
+GROUP BY orderid
+HAVING COUNT(*) >1 ;  
