@@ -1,0 +1,15 @@
+ -- 03_customer_analysis :
+ SELECT TOP (10)
+o.custid , ROUND(SUM(od.unitprice * od.qty * (1 - od.discount)), 2
+    ) AS Revenue
+FROM Sales.Orders as o
+JOIN Sales.OrderDetails as od 
+ON o.orderid = od.orderid
+GROUP BY o.custid
+ORDER BY Revenue DESC 
+
+SELECT 
+custid , COUNT(*) as totalorders
+FROM Sales.Orders
+GROUP BY custid
+ORDER BY totalorders DESC;
