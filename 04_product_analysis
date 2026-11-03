@@ -1,0 +1,35 @@
+ --04_product_analysis :
+SELECT
+TOP(10) p.productname , 
+ROUND(SUM(o.unitprice * o.qty * (1 - o.discount)), 2) as revenue
+FROM Sales.OrderDetails as o 
+JOIN Production.Products AS p
+    ON o.productid = p.productid
+GROUP BY p.productname
+ORDER BY revenue DESC;
+--------------------------------------------------------
+--business insights
+
+--revenue by year :
+
+SELECT
+    YEAR(o.orderdate) AS OrderYear,
+    ROUND(
+        SUM(od.unitprice * od.qty * (1 - od.discount)), 2
+    ) AS Revenue
+FROM Sales.Orders AS o
+JOIN Sales.OrderDetails AS od
+    ON o.orderid = od.orderid
+GROUP BY YEAR(o.orderdate)
+ORDER BY OrderYear;
+
+--revenue growth :
+
+WITH YearlyRevenue AS (
+    SELECT
+        YEAR(o.orderdate) AS OrderYear,
+        SUM(od.unitprice * od.qty * (1 - od.discount)) AS Revenue
+    FROM Sales.Orders AS o
+    JOIN Sales.OrderDetails AS od
+        ON o.orderid = od.orderid
+    GROUP BY YEAR(o.orderdate)
