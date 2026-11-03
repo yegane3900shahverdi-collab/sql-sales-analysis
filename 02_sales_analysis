@@ -1,0 +1,24 @@
+-- 02_sales_analysis :
+SELECT Top(5) * 
+FROM Sales.OrderDetails ;   
+
+
+SELECT ROUND (
+       SUM(unitprice*qty*(1-discount)) , 2)  as totalrevenue
+FROM Sales.OrderDetails ;      
+  
+
+SELECT 
+      YEAR(o.orderdate) as orderyear , 
+      SUM(od.unitprice*od.qty*(1-od.discount)) as revenue 
+FROM Sales.Orders as o 
+JOIN Sales.OrderDetails as od 
+    ON o.orderid = od.orderid
+GROUP BY YEAR(o.orderdate)
+ORDER BY OrderYear ;         
+
+SELECT 
+ROUND( 
+SUM (od.unitprice*qty*(1-od.discount)) / COUNT (DISTINCT od.orderid) , 2)
+as averageordervalue
+FROM Sales.OrderDetails as od ;   
